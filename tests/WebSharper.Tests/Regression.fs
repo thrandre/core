@@ -423,6 +423,26 @@ module Bug948 =
         f (Union2Of2 NullCase)
 
 [<JavaScript>]
+module Bug951 =
+    // currently failing to compile
+    //type Foo() =
+    //    static let hey = 43
+    //    abstract member clone: unit -> Foo
+    //    default __.clone() = new Foo()
+
+    // this should cause a compile-time error:
+    [<AbstractClass>]
+    type A() =
+        [<Name "Value">]
+        abstract Value: int
+
+    type B() =
+        inherit A()
+        [<Name "Value">]
+        member this.ValueB = 2
+        override this.Value = 1 
+
+[<JavaScript>]
 let Tests =
     TestCategory "Regression" {
 
